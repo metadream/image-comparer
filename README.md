@@ -1,6 +1,7 @@
 # ImageComparer
 
 ## Demo
+https://metadream.github.io/image-comparer
 
 ## Usage
 ```js
