@@ -1,0 +1,83 @@
+.image-comparer * {
+    box-sizing: border-box;
+}
+
+.image-comparer {
+    position: relative;
+    background: #f6f6f6;
+    aspect-ratio: 1;
+    user-select: none;
+    overflow: hidden;
+}
+
+.image-comparer.maximized {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, .7);
+    aspect-ratio: unset;
+}
+
+.image-comparer .maximized-icon {
+    position: absolute;
+    z-index: 998;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, .7);
+    padding: 6px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.image-comparer .maximized-icon > svg {
+    fill: #fff;
+}
+
+.image-comparer:hover .maximized-icon {
+    opacity: 1 !important;
+}
+
+.image-comparer > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    -webkit-user-drag: none;
+}
+
+.image-comparer .left-image {
+    clip-path: inset(0 50% 0 0);
+}
+
+.image-comparer .right-image {
+    clip-path: inset(0 0 0 50%);
+}
+
+.image-comparer .slider-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 100%;
+    background: #fff;
+    cursor: ew-resize;
+    opacity: .8;
+}
+
+.image-comparer .slider-handle:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 50px;
+    background: #fff;
+}
