@@ -52,6 +52,7 @@ class ImageComparator {
 
     /** 拖动图像 */
     dragImages(e) {
+        if (e.button !== 0) return;
         let startX = e.clientX;
         let startY = e.clientY;
         let offsetX = 0;
@@ -174,7 +175,9 @@ class ImageComparator {
 
         // 拖动滑动条事件
         this.slider.onpointerdown = e => {
+            if (e.button !== 0) return;
             e.stopPropagation();  // 防止冒泡
+
             document.body.style.cursor = 'ew-resize';
             document.onpointermove = e => {
                 // 设置滑动条位置
