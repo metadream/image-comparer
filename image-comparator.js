@@ -26,6 +26,21 @@ class ImageComparator {
         this.container.onpointerdown = e => this.dragImages(e);
         this.container.onwheel = e => this.scaleImages(e);
 
+        // 监听图像变化以设置容器高度
+        new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
+                    this.getImageDimension(mutation.target).then(d => {
+                        const aspectRatio = d.width / d.height;
+                        this.container.style.paddingBottom = `${(1 / aspectRatio) * 100}%`;
+                    });
+                }
+            });
+        }).observe(this.leftImage, {
+            attributes: true,
+            attributeFilter: ['src']
+        });
+
         // 容器自适应图像高度
         this.getImageDimension(this.leftImage).then(d => {
             const aspectRatio = d.width / d.height;
