@@ -11,6 +11,20 @@
     user-select: none;
 }
 
+.image-comparator > img {
+    position: absolute;
+    width: 100%;
+    -webkit-user-drag: none;
+}
+
+.image-comparator .left-image {
+    clip-path: inset(0 50% 0 0);
+}
+
+.image-comparator .right-image {
+    clip-path: inset(0 0 0 50%);
+}
+
 .image-comparator.maximized {
     position: fixed;
     z-index: 999;
@@ -18,10 +32,15 @@
     bottom: 0;
     left: 0;
     right: 0;
+    padding-bottom: 0 !important;
     width: 100% !important;
     height: 100% !important;
     background: rgba(0, 0, 0, .7);
-    aspect-ratio: unset;
+}
+
+.image-comparator.maximized > img {
+    height: 100%;
+    object-fit: contain;
 }
 
 .image-comparator .maximized-icon {
@@ -44,20 +63,6 @@
 
 .image-comparator:hover .maximized-icon {
     opacity: 1 !important;
-}
-
-.image-comparator > img {
-    position: absolute;
-    width: 100%;
-    -webkit-user-drag: none;
-}
-
-.image-comparator .left-image {
-    clip-path: inset(0 50% 0 0);
-}
-
-.image-comparator .right-image {
-    clip-path: inset(0 0 0 50%);
 }
 
 .image-comparator .slider-handle {
