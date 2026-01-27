@@ -26,24 +26,10 @@ class ImageComparator {
         this.container.onpointerdown = e => this.dragImages(e);
         this.container.onwheel = e => this.scaleImages(e);
 
-        // 监听图像变化以设置容器高度
-        new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'src') {
-                    this.getImageDimension(mutation.target).then(d => {
-                        const aspectRatio = d.height > 0 ? d.width / d.height : 0;
-                        this.container.style.paddingBottom = `${(1 / aspectRatio) * 100}%`;
-                    });
-                }
-            });
-        }).observe(this.leftImage, {
-            attributes: true,
-            attributeFilter: ['src']
-        });
-
         // 容器自适应图像高度
-        this.getImageDimension(this.leftImage).then(d => {
-            const aspectRatio = d.height > 0 ? d.width / d.height : 0;
+        this.leftImage.addEventListener('load', () => {
+            const img = this.leftImage;
+            const aspectRatio = img.naturalHeight > 0 ? img.naturalWidth / img.naturalHeight : 0;
             this.container.style.paddingBottom = `${(1 / aspectRatio) * 100}%`;
         });
 
@@ -226,23 +212,5 @@ class ImageComparator {
         this.maximizeIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5"/></svg>';
         this.maximizeIcon.onclick = () => this.toggleMaximize();
         this.container.append(this.maximizeIcon);
-    }
-
-    /** 获取图片尺寸 */
-    getImageDimension(img) {
-        return new Promise((resolve, reject) => {
-            if (img.complete) {
-                resolve({
-                    width: img.width,
-                    height: img.height
-                });
-            } else {
-                img.onerror = reject;
-                img.onload = () => resolve({
-                    width: img.width,
-                    height: img.height
-                });
-            }
-        });
     }
 }
